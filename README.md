@@ -50,3 +50,13 @@ The `WHERE` clause in AQL can be specified to restrict the result to documents t
 
 If multiple where clauses are provided, they will be connected with the and operator.
 
+### join
+
+There are three types of joins in AQL: Left, Right and Inner Join. In Brazil, the joins are added from left to right in the order you applied. There are three methods on the Query object: `left_join`, `right_join` and `inner_join`. Each of them takes the right side of the join and the ON statement (which is again copied unmodified and not checked) as arguments. For Example:
+
+```ruby
+    query = Brazil::Query.new 
+    query.from "collection c"
+	query.left_join "collection d", :on => "c.id == d.id"
+    puts query.evaluate #=> "SELECT c FROM collection c LEFT JOIN collection d ON (c.id == d.id)"
+```
