@@ -34,5 +34,19 @@ An query like that is represented by an `Brazil::Query` in Brazil. Every query h
 ```ruby
     query = Brazil::Query.new 
     query.from "collection c"
-    puts query.evaluate #=> "select c from collection c"
+    puts query.evaluate #=> "SELECT c FROM collection c"
 ```
+
+### where
+
+The `WHERE` clause in AQL can be specified to restrict the result to documents that match certain criteria. In Brazil the statement is (currently) copied unmodified and not checked:
+
+```ruby
+    query = Brazil::Query.new 
+    query.from "collection c"
+	query.where "c.age < 40 && c.name == 'john'"
+    puts query.evaluate #=> "SELECT c FROM collection c WHERE c.age < 40 && c.name == 'john'"
+```
+
+If multiple where clauses are provided, they will be connected with the and operator.
+
