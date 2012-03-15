@@ -133,6 +133,23 @@ describe Brazil do
           @query.inner_join("collection d", :on => "c.id == d.id").should equal(@query)
         end
       end
+      
+      describe "the order clause" do
+        it "should add the order clause to the query" do
+          @query.order "c.age"
+          @query.evaluate.should ==("SELECT c FROM collection c ORDER BY c.age")
+        end
+        
+        it "should raise a Runtime Error if the order clause was used before" do
+          @query.order "c.age"
+          expect { @query.order "d.age" }.to raise_error(RuntimeError, "order statement already added")
+        end
+        
+        it "should add a list of order clauses to the query" do
+          @query.order "c.age ASC", "c.name"
+          @query.evaluate.should ==("SELECT c FROM collection c ORDER BY c.age ASC, c.name")
+        end
+      end
     end
   end
 end

@@ -33,6 +33,11 @@ module Brazil
       join("inner", right_collection, argument_hash)
     end
     
+    def order(*order_statements)
+      raise "order statement already added" unless @order_statements.nil?
+      @order_statements = order_statements
+    end
+    
     def evaluate
       raise "From statement was not provided" if @collection_name.nil? or @collection_alias.nil?
       evaluation = "SELECT #{@collection_alias} FROM #{@collection_name} #{@collection_alias}"
@@ -40,6 +45,7 @@ module Brazil
         evaluation += " #{join[:type].upcase} JOIN #{join[:right_collection]} ON #{join[:on]}" 
       end
       evaluation += " WHERE #{@where_statements.join ' && '}" if @where_statements.length > 0
+      evaluation += " ORDER BY #{@order_statements.join ', '}" if @order_statements
       
       return evaluation
     end
