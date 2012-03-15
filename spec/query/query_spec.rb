@@ -150,6 +150,32 @@ describe Brazil do
           @query.evaluate.should ==("SELECT c FROM collection c ORDER BY c.age ASC, c.name")
         end
       end
+      
+      describe "the limit clause" do
+        it "should raise a Runtime Error if neither a maximum nor from and to are declared" do
+          expect { @query.limit socks: 5 }.to raise_error(RuntimeError, "neither maximum nor from and to are declared")
+        end
+        
+        it "should add the order clause with a maximum to the query" do
+          @query.limit maximum: 5
+          @query.evaluate.should ==("SELECT c FROM collection c LIMIT 5")
+        end
+        
+        it "should raise a Runtime Error if a maximum and a from or a to are declared" do
+          expect { @query.limit maximum: 5, from: 1 }.to raise_error(RuntimeError, "either use maximum or from and to")
+          expect { @query.limit maximum: 5, to: 5 }.to raise_error(RuntimeError, "either use maximum or from and to")
+        end
+        
+        it "should add the order clause with a to and from to the query" do
+          @query.limit from: 5, to: 10
+          @query.evaluate.should ==("SELECT c FROM collection c LIMIT 5, 10")
+        end
+        
+        it "should raise a Runtime Error if the limit clause was used before" do
+          @query.limit maximum: 5
+          expect { @query.limit maximum: 10 }.to raise_error(RuntimeError, "limit statement already added")
+        end
+      end
     end
   end
 end

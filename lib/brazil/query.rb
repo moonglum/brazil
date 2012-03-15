@@ -38,6 +38,19 @@ module Brazil
       @order_statements = order_statements
     end
     
+    def limit(limit_statements)
+      raise "limit statement already added" unless @limit_statement.nil?
+      
+      if limit_statements.has_key? :maximum
+        raise "either use maximum or from and to" if limit_statements.has_key? :from or limit_statements.has_key? :to
+        @limit_statement = limit_statements[:maximum]
+      elsif limit_statements.has_key? :from and limit_statements.has_key? :to
+        @limit_statement = "#{limit_statements[:from]}, #{limit_statements[:to]}"
+      else
+        raise "neither maximum nor from and to are declared" 
+      end
+    end
+    
     def evaluate
       raise "From statement was not provided" if @collection_name.nil? or @collection_alias.nil?
       evaluation = "SELECT #{@collection_alias} FROM #{@collection_name} #{@collection_alias}"
@@ -46,6 +59,7 @@ module Brazil
       end
       evaluation += " WHERE #{@where_statements.join ' && '}" if @where_statements.length > 0
       evaluation += " ORDER BY #{@order_statements.join ', '}" if @order_statements
+      evaluation += " LIMIT #{@limit_statement}" if @limit_statement
       
       return evaluation
     end
