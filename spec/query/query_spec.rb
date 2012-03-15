@@ -65,6 +65,74 @@ describe Brazil do
         end
       end
       
+      describe "the left join clauses" do
+        it "should refuse join clauses without the on parameter" do
+          expect { @query.left_join "collection d" }.to raise_error(ArgumentError)
+          expect { @query.left_join "collection d", 21 }.to raise_error(RuntimeError, "on statement missing")
+          expect { @query.left_join "collection d", :for => "c.id = d.id" }.to raise_error(RuntimeError, "on statement missing")
+        end
+        
+        it "should add a left join to the query" do
+          @query.left_join "collection d", :on => "c.id == d.id"
+          @query.evaluate.should ==("SELECT c FROM collection c LEFT JOIN collection d ON c.id == d.id")
+        end
+        
+        it "should combine multiple joins in a row" do
+          @query.left_join "collection d", :on => "c.id == d.id"
+          @query.left_join "collection e", :on => "d.id == e.id"
+          @query.evaluate.should ==("SELECT c FROM collection c LEFT JOIN collection d ON c.id == d.id LEFT JOIN collection e ON d.id == e.id")
+        end
+        
+        it "should return the Query object itself for where to provide chaining" do
+          @query.left_join("collection d", :on => "c.id == d.id").should equal(@query)
+        end
+      end
+      
+      describe "the right join clauses" do
+        it "should refuse join clauses without the on parameter" do
+          expect { @query.right_join "collection d" }.to raise_error(ArgumentError)
+          expect { @query.right_join "collection d", 21 }.to raise_error(RuntimeError, "on statement missing")
+          expect { @query.right_join "collection d", :for => "c.id = d.id" }.to raise_error(RuntimeError, "on statement missing")
+        end
+        
+        it "should add a right join to the query" do
+          @query.right_join "collection d", :on => "c.id == d.id"
+          @query.evaluate.should ==("SELECT c FROM collection c RIGHT JOIN collection d ON c.id == d.id")
+        end
+        
+        it "should combine multiple joins in a row" do
+          @query.right_join "collection d", :on => "c.id == d.id"
+          @query.right_join "collection e", :on => "d.id == e.id"
+          @query.evaluate.should ==("SELECT c FROM collection c RIGHT JOIN collection d ON c.id == d.id RIGHT JOIN collection e ON d.id == e.id")
+        end
+        
+        it "should return the Query object itself for where to provide chaining" do
+          @query.right_join("collection d", :on => "c.id == d.id").should equal(@query)
+        end
+      end
+      
+      describe "the inner join clauses" do
+        it "should refuse join clauses without the on parameter" do
+          expect { @query.inner_join "collection d" }.to raise_error(ArgumentError)
+          expect { @query.inner_join "collection d", 21 }.to raise_error(RuntimeError, "on statement missing")
+          expect { @query.inner_join "collection d", :for => "c.id = d.id" }.to raise_error(RuntimeError, "on statement missing")
+        end
+        
+        it "should add a right join to the query" do
+          @query.inner_join "collection d", :on => "c.id == d.id"
+          @query.evaluate.should ==("SELECT c FROM collection c INNER JOIN collection d ON c.id == d.id")
+        end
+        
+        it "should combine multiple joins in a row" do
+          @query.inner_join "collection d", :on => "c.id == d.id"
+          @query.inner_join "collection e", :on => "d.id == e.id"
+          @query.evaluate.should ==("SELECT c FROM collection c INNER JOIN collection d ON c.id == d.id INNER JOIN collection e ON d.id == e.id")
+        end
+        
+        it "should return the Query object itself for where to provide chaining" do
+          @query.inner_join("collection d", :on => "c.id == d.id").should equal(@query)
+        end
+      end
     end
   end
 end
