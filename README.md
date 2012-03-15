@@ -60,3 +60,28 @@ There are three types of joins in AQL: Left, Right and Inner Join. In Brazil, th
 	query.left_join "collection d", :on => "c.id == d.id"
     puts query.evaluate #=> "SELECT c FROM collection c LEFT JOIN collection d ON (c.id == d.id)"
 ```
+
+### order and limit
+
+The order statement influences the order of the data sets. In Brazil you can use the order setup only once per query object and it takes a list of order statements (each is a attribute with an optional `ASC` or `DESC`):
+
+```ruby
+    query = Brazil::Query.new 
+    query.from "collection c"
+	query.order "c.age ASC", "c.name"
+    puts query.evaluate #=> "SELECT c FROM collection c ORDER BY c.age ASC, c.name"
+```
+
+The limit statement (again only one per query object) influences the number of records returned. You can either give it a maximum number of data sets or a from and to value (those two options can not be combined):
+
+```ruby
+    query = Brazil::Query.new 
+    query.from "collection c"
+	query.limit maximum: 5
+    puts query.evaluate #=> "SELECT c FROM collection c LIMIT 5"
+
+    second_query = Brazil::Query.new 
+    second_query.from "collection c"
+	second_query.limit from: 5, to: 10
+    puts second_query.evaluate #=> "SELECT c FROM collection c LIMIT 5, 10"
+```
