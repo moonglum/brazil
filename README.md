@@ -90,6 +90,22 @@ second_query.limit from: 5, to: 10
 puts second_query.evaluate #=> "SELECT c FROM collection c LIMIT 5, 10"
 ```
 
+### Geo Coordinates
+
+In Avocado you can find documents via geo coordinates (very fast). Brazil features the `find_by_geocoordinates` method which takes an array with the names of the attributes, an array with the coordinates of a reference point and either a radius (to find all documents within a certain range) or a maximum (to find the nearest x documents). If you don't assign the attributes it defaults to the attributes x and y of the collection in the from statement.
+
+```ruby
+query = Brazil::Query.new 
+query.from "collection c"
+query.find_by_geocoordinates attributes: ["c.x_coord", "c.y_coord"], reference: [37.331953, -122.029669], radius: 50
+puts query.evaluate #=> "SELECT c FROM collection c WITHIN [c.x_coord, c.y_coord], [37.331953, -122.029669], 50"
+
+second_query = Brazil::Query.new 
+second_query.from "collection c"
+second_query.find_by_geocoordinates reference: [37.331953, -122.029669], maximum: 20
+puts second_query.evaluate #=> "SELECT c FROM collection c NEAR [c.x, c.y], [37.331953, -122.029669], 20"
+```
+
 # Development
 
 Brazil is in a very early stage. It is far from being feature complete (You can see a list of upcoming features [here](https://github.com/moonglum/brazil/issues?labels=enhancement&sort=created&direction=desc&state=open&page=1)). It is developed in a strict Test-First manner using RSpec. If you find a bug, please file a ticket or send a pull request with a spec showing the bug (and optionally fix it ;) ). I'm also open for all kinds of feedback from finding spelling mistakes to disagrements on design choices.
