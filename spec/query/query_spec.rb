@@ -150,7 +150,9 @@ describe Brazil do
           @query.evaluate.should ==("SELECT c FROM collection c ORDER BY c.age ASC, c.name")
         end
         
-        it "should return the Query object itself for order by to provide chaining"
+        it "should return the Query object itself for order by to provide chaining" do
+          @query.order("c.age ASC", "c.name").should equal(@query)
+        end
       end
       
       describe "the limit clause" do
@@ -178,7 +180,9 @@ describe Brazil do
           expect { @query.limit maximum: 10 }.to raise_error(RuntimeError, "limit statement already added")
         end
         
-        it "should return the Query object itself for limit to provide chaining"
+        it "should return the Query object itself for limit to provide chaining" do
+          @query.limit(maximum: 5).should equal(@query)
+        end
       end
       
       describe "find by geo coordinate" do
@@ -209,7 +213,9 @@ describe Brazil do
           @query.evaluate.should ==("SELECT c FROM collection c WITHIN [c.x, c.y], [37.331953, -122.029669], 50")
         end
         
-        it "should return the Query object itself for geo coordinates to provide chaining"
+        it "should return the Query object itself for geo coordinates to provide chaining" do
+          @query.find_by_geocoordinates(attributes: ["c.x", "c.y"], reference: [37.331953, -122.029669], maximum: 5).should equal(@query)
+        end
       end
     end
   end

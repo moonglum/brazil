@@ -37,6 +37,8 @@ module Brazil
     def order(*order_statements)
       raise "order statement already added" unless @order_statements.nil?
       @order_statements = order_statements
+      
+      return self
     end
     
     def limit(limit_statements)
@@ -50,6 +52,8 @@ module Brazil
       else
         raise "neither maximum nor from and to are declared" 
       end
+      
+      return self
     end
     
     def find_by_geocoordinates(geo_statements)
@@ -67,6 +71,8 @@ module Brazil
       else
         raise "neither a radius nor a maximum was given" 
       end
+      
+      return self
     end
     
     def evaluate

@@ -41,7 +41,9 @@ query.from "collection c"
 puts query.evaluate #=> "SELECT c FROM collection c"
 ```
 
-### where
+All Query Methods support chaining. You could write: `query.from("collection c").where("c.number < 300")`
+
+### Using where to match criteria
 
 The `WHERE` clause in AQL can be specified to restrict the result to documents that match certain criteria. In Brazil the statement is (currently) copied unmodified and not checked:
 
@@ -54,7 +56,7 @@ puts query.evaluate #=> "SELECT c FROM collection c WHERE c.age < 40 && c.name =
 
 If multiple where clauses are provided, they will be connected with the `&&` operator.
 
-### join
+### Joins
 
 There are three types of joins in AQL: Left, Right and Inner Join. In Brazil, the joins are added from left to right in the order you applied the methods. There are three methods on the Query object: `left_join`, `right_join` and `inner_join`. Each of them takes the right side of the join and the ON statement (which is again copied unmodified and not checked) as arguments. For example:
 
@@ -65,7 +67,7 @@ query.left_join "collection d", :on => "c.id == d.id"
 puts query.evaluate #=> "SELECT c FROM collection c LEFT JOIN collection d ON (c.id == d.id)"
 ```
 
-### order and limit
+### Order and Limit
 
 The order statement influences the order of the data sets. In Brazil you can use the order setup only once per query object and it takes a list of order statements (each is an attribute with an optional `ASC` or `DESC`):
 
