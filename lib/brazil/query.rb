@@ -3,6 +3,7 @@ module Brazil
     def initialize
       @where_statements = []
       @joins = []
+      @geo_statements = []
     end
     
     def from(from_statement)
@@ -51,15 +52,31 @@ module Brazil
       end
     end
     
+    def find_by_geocoordinates(geo_statements)
+      raise "no reference point was assigned" unless geo_statements.has_key? :reference
+      
+      unless geo_statements[:attributes]
+        geo_statements[:attributes] = ["#{@collection_alias}.x", "#{@collection_alias}.y"]
+      end
+      
+      if geo_statements.has_key? :radius
+        raise "you can't add maximum and radius at once" if geo_statements.has_key? :maximum
+        @geo_statements << "WITHIN [#{geo_statements[:attributes].first}, #{geo_statements[:attributes].last}], #{geo_statements[:reference]}, #{geo_statements[:radius]}"
+      elsif geo_statements.has_key? :maximum
+        @geo_statements << "NEAR [#{geo_statements[:attributes].first}, #{geo_statements[:attributes].last}], #{geo_statements[:reference]}, #{geo_statements[:maximum]}"
+      else
+        raise "neither a radius nor a maximum was given" 
+      end
+    end
+    
     def evaluate
       raise "From statement was not provided" if @collection_name.nil? or @collection_alias.nil?
       evaluation = "SELECT #{@collection_alias} FROM #{@collection_name} #{@collection_alias}"
-      @joins.each do |join|
-        evaluation += " #{join[:type].upcase} JOIN #{join[:right_collection]} ON #{join[:on]}" 
-      end
+      @joins.each { |join| evaluation += " #{join[:type].upcase} JOIN #{join[:right_collection]} ON #{join[:on]}" }
       evaluation += " WHERE #{@where_statements.join ' && '}" if @where_statements.length > 0
       evaluation += " ORDER BY #{@order_statements.join ', '}" if @order_statements
       evaluation += " LIMIT #{@limit_statement}" if @limit_statement
+      @geo_statements.each { |geo_statement| evaluation += " #{geo_statement}"}
       
       return evaluation
     end

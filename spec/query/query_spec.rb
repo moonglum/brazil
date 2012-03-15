@@ -149,6 +149,8 @@ describe Brazil do
           @query.order "c.age ASC", "c.name"
           @query.evaluate.should ==("SELECT c FROM collection c ORDER BY c.age ASC, c.name")
         end
+        
+        it "should return the Query object itself for order by to provide chaining"
       end
       
       describe "the limit clause" do
@@ -175,6 +177,39 @@ describe Brazil do
           @query.limit maximum: 5
           expect { @query.limit maximum: 10 }.to raise_error(RuntimeError, "limit statement already added")
         end
+        
+        it "should return the Query object itself for limit to provide chaining"
+      end
+      
+      describe "find by geo coordinate" do
+        it "should raise a Runtime Error if the reference point is missing" do
+          expect { @query.find_by_geocoordinates attributes: ["c.x", "c.y"], maximum: 5}.to raise_error(RuntimeError, "no reference point was assigned")
+        end
+        
+        it "should raise a Runtime Error if neither a radius nor a maximum is given" do
+          expect { @query.find_by_geocoordinates attributes: ["c.x", "c.y"], reference: [37.331953, -122.029669]}.to raise_error(RuntimeError, "neither a radius nor a maximum was given")
+        end
+        
+        it "should add a WITHIN statement to the query with explicit attributes" do
+          @query.find_by_geocoordinates attributes: ["c.x", "c.y"], reference: [37.331953, -122.029669], radius: 50
+          @query.evaluate.should ==("SELECT c FROM collection c WITHIN [c.x, c.y], [37.331953, -122.029669], 50")
+        end
+        
+        it "should add a WITHIN statement to the query with explicit attributes" do
+          @query.find_by_geocoordinates attributes: ["c.x", "c.y"], reference: [37.331953, -122.029669], maximum: 5
+          @query.evaluate.should ==("SELECT c FROM collection c NEAR [c.x, c.y], [37.331953, -122.029669], 5")
+        end
+        
+        it "should raise a Runtime Error if a radius and a maximum is given" do
+          expect {@query.find_by_geocoordinates attributes: ["c.x", "c.y"], reference: [37.331953, -122.029669], maximum: 5, radius: 50}.to raise_error(RuntimeError, "you can't add maximum and radius at once")
+        end
+        
+        it "should add the default value for the WITHIN statement if no explicit attributes are given" do
+          @query.find_by_geocoordinates reference: [37.331953, -122.029669], radius: 50
+          @query.evaluate.should ==("SELECT c FROM collection c WITHIN [c.x, c.y], [37.331953, -122.029669], 50")
+        end
+        
+        it "should return the Query object itself for geo coordinates to provide chaining"
       end
     end
   end
