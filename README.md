@@ -31,6 +31,8 @@ An AQL query looks like that (optional parts are wrapped in square brackets):
 
 An query like that is represented by an `Brazil::Query` in Brazil. Every query has to have exactly one `from_statement` – the `select_statement` defaults to returning everything:
 
+```ruby
     query = Brazil::Query.new 
     query.from "collection c"
-    puts query.evaluate
+    puts query.evaluate #=> "select c from collection c"
+```
