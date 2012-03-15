@@ -1,5 +1,7 @@
 # Brazil
 
+[![Build Status](https://secure.travis-ci.org/moonglum/Brazil.png?branch=master)](http://travis-ci.org/moonglum/Brazil)
+
 > 'Ere I am, J.H. ...The ghost in the machine.   
   &mdash; Mr. Helpmann
 
