@@ -1,5 +1,8 @@
 module Brazil
   class Query
+    def initialize
+      @where_statements = []
+    end
     
     def from(from_statement)
       from_statement = from_statement.to_s
@@ -11,9 +14,17 @@ module Brazil
       return self
     end
     
+    def where(where_statement)
+      @where_statements << where_statement
+      
+      return self
+    end
+    
     def evaluate
       raise "From statement was not provided" if @collection_name.nil? or @collection_alias.nil?
-      return "SELECT #{@collection_alias} FROM #{@collection_name} #{@collection_alias}"
+      evaluation = "SELECT #{@collection_alias} FROM #{@collection_name} #{@collection_alias}"
+      evaluation += " WHERE #{@where_statements.join ' && '}" if @where_statements.length > 0
+      return evaluation
     end
   end
 end

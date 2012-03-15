@@ -47,6 +47,24 @@ describe Brazil do
       it "should raise a Runtime Error when provided with a second valid from statement" do
         expect { @query.from "collection c" }.to raise_error(RuntimeError, "From statement already provided")
       end
+      
+      describe "the where clause" do
+        it "should add a correctly formed where statement to the AQL query" do
+          @query.where("c.count > 5")
+          @query.evaluate.should ==("SELECT c FROM collection c WHERE c.count > 5")
+        end
+        
+        it "should return the Query object itself for where to provide chaining" do
+          @query.where("c.count > 5").should equal(@query)
+        end
+        
+        it "should connect multiple where statements with the logical and" do
+          @query.where("c.count > 5")
+          @query.where("c.count < 200")
+          @query.evaluate.should ==("SELECT c FROM collection c WHERE c.count > 5 && c.count < 200")
+        end
+      end
+      
     end
   end
 end
