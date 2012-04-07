@@ -5,6 +5,8 @@
 > 'Ere I am, J.H. ...The ghost in the machine.   
   &mdash; Mr. Helpmann
 
+**IMPORTANT REMARK:** Brazil is currently on hold, because the Avocado Query Language is redesigned at the moment. Work here will continue as soon as the language solidifies.
+
 Brazil is an experimental Ruby DSL for creating queries for the [AvocadoDB](https://github.com/triAGENS/AvocadoDB) in AQL (The Avocado Query Language). Brazil is also the fifth biggest producer of Avocados (according to Wikipedia) and an amazing movie.
 
 Brazil is not intended to be a Object Document Mapper, but to be used by the ODM to build the queries. It is built for Ruby 1.9 only. The compatability with Ruby 1.9.2, 1.9.3, JRuby (1.9 Mode) and Rubinius (1.9 Mode) is tested by Travis.
