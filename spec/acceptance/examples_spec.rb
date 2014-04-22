@@ -41,21 +41,25 @@ describe 'Usage Examples' do
     expect(result.length).to be 7
   end
 
-  it 'should allow to only return the name of the actor as `name`' do
-    query = Query.for_all('cast', in_collection: 'casting').return_as do |result|
-      result['name'] = cast['actor']
+  describe 'return_as' do
+    it 'should allow to only return the name of the actor as `name`' do
+      query = Query.for_all('cast', in_collection: 'casting').return_as do |result|
+        result['name'] = cast['actor']
+      end
+      result = send_query(query)
+      expect(result.first.keys).to eq ['name']
+      expect(result.map { |doc| doc['name'] }).to include 'Michael Palin'
     end
-    result = send_query(query)
-    expect(result.first.keys).to eq ['name']
-    expect(result.map { |doc| doc['name'] }).to include 'Michael Palin'
   end
 
-  it 'should allow to filter for all Sam Lawrys in the collection' do
-    query = Query.for_all('character', in_collection: 'characters')
-      .filter { character['name'] == 'Sam Lawry' }
-      .return_as('character')
-    result = send_query(query)
-    expect(result.length).to be 1
-    expect(result.first['name']).to eq 'Sam Lawry'
+  describe 'filter' do
+    it 'should allow to filter for all Sam Lawrys in the collection' do
+      query = Query.for_all('character', in_collection: 'characters')
+        .filter { character['name'] == 'Sam Lawry' }
+        .return_as('character')
+      result = send_query(query)
+      expect(result.length).to be 1
+      expect(result.first['name']).to eq 'Sam Lawry'
+    end
   end
 end
