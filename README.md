@@ -61,6 +61,16 @@ If, for example, you want to iterate over all characters in the `characters` col
 query = Query.for_all('character', in_collection: 'characters').return_as('character')
 ```
 
+## A more sophisticated `return_as` or: Projections
+
+In a lot of cases, you may want to influence the form of each of the returned documents. In relational algebra this is known as a projection. With Brazil you can do this by providing a block to the `return_as` statement instead of a String. This block will be provided with a document on which you can then define the attributes you want. Typically the value for these attributes will be an attribute from one of the variables you defined. For this purpose, all variables you define in a `for_all` statement will be made available in the context of the block. You can access their attributes to set the attributes of your result document. If for example you want to iterate over all documents in the `casting` collection and return a document with a `name` attribute for each which has the value of the `actor` attribute of the document, you could do it like this:
+
+```ruby
+query = Query.for_all('cast', in_collection: 'casting').return_as do |result|
+  result.name = cast.actor
+end
+```
+
 ## Contributing
 
 If you want to contribute to the project, see CONTRIBUTING.md for details. It contains information on our process and how to set up everything. The following people have contributed to this project:

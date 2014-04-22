@@ -1,4 +1,6 @@
 require 'aql'
+require 'brazil/document'
+require 'brazil/return_statement_context'
 
 class Query
   include AQL
@@ -13,8 +15,15 @@ class Query
     @content = []
   end
 
-  def return_as(variable_name)
-    @content << Node::Operation::Unary::Return.new(Node::Name.new(variable_name))
+  def return_as(variable_name = nil, &b)
+    if block_given? and variable_name == nil
+      document = Document.new
+      context = ReturnStatementContext.new
+      context.instance_exec(document, &b)
+      @content << Node::Operation::Unary::Return.new(document.to_ast)
+    else
+      @content << Node::Operation::Unary::Return.new(Node::Name.new(variable_name))
+    end
     self
   end
 
