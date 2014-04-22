@@ -1,6 +1,7 @@
 require 'aql'
 require 'brazil/document'
 require 'brazil/return_statement_context'
+require 'brazil/filter_statement_context'
 
 class Query
   include AQL
@@ -24,6 +25,13 @@ class Query
     else
       @content << Node::Operation::Unary::Return.new(Node::Name.new(variable_name))
     end
+    self
+  end
+
+  def filter(&b)
+    context = FilterStatementContext.new
+    context.instance_eval(&b)
+    @content << Node::Operation::Unary::Filter.new(context.to_ast)
     self
   end
 

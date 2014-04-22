@@ -49,4 +49,20 @@ describe 'Usage Examples' do
     expect(result.first.keys).to eq ['name']
     expect(result.map { |doc| doc['name'] }).to include 'Michael Palin'
   end
+
+  it 'should allow to filter for all Sam Lawrys in the collection' do
+    query = Query.for_all('character', in_collection: 'characters')
+      .filter { character.name == 'Sam Lawry' }
+      .return_as('character')
+    result = send_query(query)
+    expect(result.length).to be 1
+    expect(result.first['name']).to eq 'Sam Lawry'
+  end
+
+  # Maybe both filter and result_as should act as if everything was a hash
+  # return_as |result|
+  #   result['name'] = cast['actor']
+  # end
+  #
+  # filter { character['name'] == 'Sam Lawry' }
 end

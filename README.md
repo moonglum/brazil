@@ -71,6 +71,16 @@ query = Query.for_all('cast', in_collection: 'casting').return_as do |result|
 end
 ```
 
+## Filtering the results
+
+You probably don't want all of the documents in a collection. AQL allows you to filter your results. In Brazil you can do that by chaining a `filter` statement into your query builder. In this statement you can use different operators to check if you want this document to be in your collection. Let us start with the equality operator. In the following statement we want to get all characters that have the name "Sam Lawry" and return the according document:
+
+```ruby
+query = Query.for_all('character', in_collection: 'characters')
+  .filter { character.name == 'Sam Lawry' }
+  .return_as('character')
+```
+
 ## Contributing
 
 If you want to contribute to the project, see CONTRIBUTING.md for details. It contains information on our process and how to set up everything. The following people have contributed to this project:
