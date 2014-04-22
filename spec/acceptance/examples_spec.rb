@@ -43,7 +43,7 @@ describe 'Usage Examples' do
 
   it 'should allow to only return the name of the actor as `name`' do
     query = Query.for_all('cast', in_collection: 'casting').return_as do |result|
-      result.name = cast.actor
+      result['name'] = cast['actor']
     end
     result = send_query(query)
     expect(result.first.keys).to eq ['name']
@@ -60,9 +60,5 @@ describe 'Usage Examples' do
   end
 
   # Maybe both filter and result_as should act as if everything was a hash
-  # return_as |result|
-  #   result['name'] = cast['actor']
-  # end
-  #
   # filter { character['name'] == 'Sam Lawry' }
 end

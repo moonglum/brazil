@@ -3,7 +3,7 @@ class Projection
     @name = name
   end
 
-  def method_missing(attribute_selector)
+  def [](attribute_selector)
     [@name, attribute_selector]
   end
 end

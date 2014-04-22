@@ -7,8 +7,8 @@ class Document
     @attributes = {}
   end
 
-  def method_missing(attribute_name, document_selector)
-    @attributes[attribute_name[0...-1]] = document_selector
+  def []=(attribute_name, document_selector)
+    @attributes[attribute_name] = document_selector
   end
 
   def to_ast

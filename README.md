@@ -67,7 +67,7 @@ In a lot of cases, you may want to influence the form of each of the returned do
 
 ```ruby
 query = Query.for_all('cast', in_collection: 'casting').return_as do |result|
-  result.name = cast.actor
+  result['name'] = cast['actor']
 end
 ```
 
