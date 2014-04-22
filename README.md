@@ -77,7 +77,7 @@ You probably don't want all of the documents in a collection. AQL allows you to 
 
 ```ruby
 query = Query.for_all('character', in_collection: 'characters')
-  .filter { character.name == 'Sam Lawry' }
+  .filter { character['name'] == 'Sam Lawry' }
   .return_as('character')
 ```
 

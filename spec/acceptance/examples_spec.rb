@@ -52,13 +52,10 @@ describe 'Usage Examples' do
 
   it 'should allow to filter for all Sam Lawrys in the collection' do
     query = Query.for_all('character', in_collection: 'characters')
-      .filter { character.name == 'Sam Lawry' }
+      .filter { character['name'] == 'Sam Lawry' }
       .return_as('character')
     result = send_query(query)
     expect(result.length).to be 1
     expect(result.first['name']).to eq 'Sam Lawry'
   end
-
-  # Maybe both filter and result_as should act as if everything was a hash
-  # filter { character['name'] == 'Sam Lawry' }
 end

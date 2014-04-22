@@ -23,7 +23,7 @@ class BoundVariable
     @variable_name = variable_name
   end
 
-  def method_missing(attribute_name)
+  def [](attribute_name)
     @attribute = Attribute.new(self, attribute_name)
   end
 
