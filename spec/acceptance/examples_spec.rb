@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 require 'acceptance/spec_helper'
+require 'brazil'
 
 def setup_characters_collection
   character = DATABASE.create_collection('characters')
@@ -23,8 +24,8 @@ def setup_cast_collection
   casting.create_document(actor: 'Ian Holm', character: 'Mr. Kurtzmann')
 end
 
-def send_query(query_string)
-  DATABASE.query.execute(query_string).to_a.map(&:to_h)
+def send_query(query)
+  DATABASE.query.execute(query.to_aql).to_a.map(&:to_h)
 end
 
 describe 'Usage Examples' do
@@ -34,8 +35,9 @@ describe 'Usage Examples' do
     setup_cast_collection
   end
 
-  it 'should find exactly one "Sam Lawry"' do
-    result = send_query('FOR `character` IN `characters` FILTER `character`.`name` == "Sam Lawry" RETURN `character`')
-    expect(result.length).to be 1
+  it 'should find all seven characters' do
+    query = Query.for_all('character', in_collection: 'characters').return_as('character')
+    result = send_query(query)
+    expect(result.length).to be 7
   end
 end

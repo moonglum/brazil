@@ -46,7 +46,20 @@ gem install brazil
 
 ## Usage
 
-**TODO: Write usage instructions here**
+In our examples we will use a collection of characters and their cast from the movie 'Brazil'. We will work our way through AQL using Brazil to generate the queries.
+
+## The basic form
+
+When you're querying using Brazil each of the queries needs at least two things: One or more `for_all` calls and exactly one `return_as` call. You can imagine that a query always iterates over each of the documents in a collection (there are of course indexes etc. that allow a lot of shortcuts, but for a basic mental model you can imagine it like this). For all the documents you selected, you have to specify what exactly you want to return. In the simplest case this is the entire document.
+
+* `for_all('variable_name', in_collection: 'collection_name')`: Iterate over all documents in the collection with the name `collection_name` – in each iteration call the current document `variable_name`.
+* `return_as`: In its basic form it takes the name of a variable as a String. This will return the entire document denoted by the variable.
+
+If, for example, you want to iterate over all characters in the `characters` collection and return each one of them, you could do that as follows:
+
+```ruby
+query = Query.for_all('character', in_collection: 'characters').return_as('character')
+```
 
 ## Contributing
 
