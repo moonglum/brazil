@@ -11,7 +11,7 @@ class Attribute
   def ==(val)
     @operator = Node::Operator::Binary::Equality.new(
       @attribute,
-      Node::Literal::Primitive::String.new(val)
+      Node::Literal.build(val)
     )
   end
 end

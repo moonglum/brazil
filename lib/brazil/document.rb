@@ -23,7 +23,7 @@ class Document
     if right_side.class == Array
       Node::Attribute.new(Node::Name.new(right_side.first), Node::Name.new(right_side.last))
     else
-      Node::Literal::Primitive::String.new(right_side)
+        Node::Literal.build(right_side)
     end
   end
 end
