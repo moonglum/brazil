@@ -4,12 +4,12 @@ require 'brazil'
 
 def setup_characters_collection
   character = DATABASE.create_collection('characters')
-  character.create_document(name: 'Sam Lawry')
-  character.create_document(name: 'Archibald "Harry" Tuttle')
+  character.create_document(name: 'Sam Lawry', job: 'Goverment Employee')
+  character.create_document(name: 'Archibald "Harry" Tuttle', job: 'Renegade Air Conditioning Specialist')
   character.create_document(name: 'Jill Layton')
-  character.create_document(name: 'Jack Lint')
-  character.create_document(name: 'Ida Lowry')
-  character.create_document(name: 'Spoor')
+  character.create_document(name: 'Jack Lint', job: 'Goverment Employee')
+  character.create_document(name: 'Ida Lowry', job: 'Retired')
+  character.create_document(name: 'Spoor', job: 'Goverment Certified Air Conditioning Specialist')
   character.create_document(name: 'Mr. Kurtzmann')
 end
 
@@ -87,6 +87,16 @@ describe 'Usage Examples' do
         .return_as('character')
       result = send_query(query)
       expect(result.first['name']).to eq 'Spoor'
+    end
+
+    it 'should allow to sort via two keys' do
+      query = Query.for_all('character', in_collection: 'characters')
+        .sort { [character['job'], character['name']] }
+        .return_as('character')
+      result = send_query(query)
+      expect(result.last['name']).to eq 'Ida Lowry'
+      result.keep_if { |character| character['job'] == 'Goverment Employee' }
+      expect(result.first['name']).to eq 'Jack Lint'
     end
   end
 end

@@ -107,6 +107,14 @@ query = Query.for_all('character', in_collection: 'characters')
   .return_as('character')
 ```
 
+It is also possible to sort via multiple criteria. In this case you need to provide a block with the criteria in order from most significant to least significant:
+
+```ruby
+query = Query.for_all('character', in_collection: 'characters')
+  .sort { [character['job'], character['name']] }
+  .return_as('character')
+```
+
 ## Contributing
 
 If you want to contribute to the project, see CONTRIBUTING.md for details. It contains information on our process and how to set up everything. The following people have contributed to this project:
