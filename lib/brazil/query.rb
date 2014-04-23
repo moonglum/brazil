@@ -8,7 +8,7 @@ class Query
   include AQL
 
   def self.for_all(variable_name, in_collection: nil)
-    query = Query.new(in_collection, variable_name)
+    Query.new(in_collection, variable_name)
   end
 
   def initialize(collection_name, variable_name)
