@@ -61,10 +61,10 @@ describe 'Usage Examples' do
     end
   end
 
-  describe 'filter' do
+  describe 'filter_by' do
     it 'should allow to filter for all Sam Lawrys in the collection' do
       query = Query.for_all('character', in_collection: 'characters')
-        .filter { character['name'] == 'Sam Lawry' }
+        .filter_by { character['name'] == 'Sam Lawry' }
         .return_as('character')
       result = send_query(query)
       expect(result.length).to be 1

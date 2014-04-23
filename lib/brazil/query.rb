@@ -29,7 +29,7 @@ class Query
     self
   end
 
-  def filter(&b)
+  def filter_by(&b)
     context = FilterStatementContext.new
     context.instance_eval(&b)
     @content << Node::Operation::Unary::Filter.new(context.to_ast)
