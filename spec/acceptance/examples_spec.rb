@@ -50,6 +50,15 @@ describe 'Usage Examples' do
       expect(result.first.keys).to eq ['name']
       expect(result.map { |doc| doc['name'] }).to include 'Michael Palin'
     end
+
+    it 'should allow to set attributes to a certain value' do
+      query = Query.for_all('cast', in_collection: 'casting').return_as do |result|
+        result['rating'] = 'awesome'
+      end
+      result = send_query(query)
+      expect(result.first.keys).to eq ['rating']
+      expect(result.map { |doc| doc['rating'] }).to include 'awesome'
+    end
   end
 
   describe 'filter' do
