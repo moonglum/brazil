@@ -99,4 +99,14 @@ describe 'Usage Examples' do
       expect(result.first['name']).to eq 'Jack Lint'
     end
   end
+
+  describe 'limit' do
+    it 'should allow to limit the results to exactly two' do
+      query = Query.for_all('character', in_collection: 'characters')
+        .limit(2)
+        .return_as('character')
+      result = send_query(query)
+      expect(result.length).to be 2
+    end
+  end
 end

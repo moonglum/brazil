@@ -43,6 +43,11 @@ class Query
     self
   end
 
+  def limit(limit)
+    @content << Node::Operation::Limit.new(Node::Literal.build(limit), nil)
+    self
+  end
+
   def to_aql
     Node::Operation::For.new(@variable_name, @collection_name, Node::Block.new(@content)).aql
   end
