@@ -72,10 +72,10 @@ describe 'Usage Examples' do
     end
   end
 
-  describe 'sort' do
+  describe 'sort_by' do
     it 'should allow to sort all characters by name' do
       query = Query.for_all('character', in_collection: 'characters')
-        .sort { character['name'] }
+        .sort_by { character['name'] }
         .return_as('character')
       result = send_query(query)
       expect(result.first['name']).to eq 'Archibald "Harry" Tuttle'
@@ -83,7 +83,7 @@ describe 'Usage Examples' do
 
     it 'should allow to sort all characters by name in descending order' do
       query = Query.for_all('character', in_collection: 'characters')
-        .sort { descending(character['name']) }
+        .sort_by { descending(character['name']) }
         .return_as('character')
       result = send_query(query)
       expect(result.first['name']).to eq 'Spoor'
@@ -91,7 +91,7 @@ describe 'Usage Examples' do
 
     it 'should allow to sort via two keys' do
       query = Query.for_all('character', in_collection: 'characters')
-        .sort { [character['job'], character['name']] }
+        .sort_by { [character['job'], character['name']] }
         .return_as('character')
       result = send_query(query)
       expect(result.last['name']).to eq 'Ida Lowry'

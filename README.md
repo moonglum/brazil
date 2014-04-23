@@ -91,11 +91,11 @@ query = Query.for_all('character', in_collection: 'characters')
 
 ## Sorting
 
-If you want to sort the result via certain criteria, use the `sort` function in Brazil. Sort takes a block where you can give an attribute name of a variable to sort. If for example you want to sort all characters using their name in ascending order, you could do it as follows:
+If you want to sort the result via certain criteria, use the `sort_by` function in Brazil. Sort takes a block where you can give an attribute name of a variable to sort. If for example you want to sort all characters using their name in ascending order, you could do it as follows:
 
 ```ruby
 query = Query.for_all('character', in_collection: 'characters')
-  .sort { character['name'] }
+  .sort_by { character['name'] }
   .return_as('character')
 ```
 
@@ -103,7 +103,7 @@ If instead you want to sort in descending order, you could do that as follows:
 
 ```ruby
 query = Query.for_all('character', in_collection: 'characters')
-  .sort { descending(character['name']) }
+  .sort_by { descending(character['name']) }
   .return_as('character')
 ```
 
@@ -111,7 +111,7 @@ It is also possible to sort via multiple criteria. In this case you need to prov
 
 ```ruby
 query = Query.for_all('character', in_collection: 'characters')
-  .sort { [character['job'], character['name']] }
+  .sort_by { [character['job'], character['name']] }
   .return_as('character')
 ```
 

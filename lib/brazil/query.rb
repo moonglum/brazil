@@ -36,7 +36,7 @@ class Query
     self
   end
 
-  def sort(&b)
+  def sort_by(&b)
     context = SortStatementContext.new
     context.instance_eval(&b)
     @content << Node::Operation::Nary::Sort.new(context.to_ast)
