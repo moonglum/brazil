@@ -2,6 +2,7 @@ require 'aql'
 require 'brazil/document'
 require 'brazil/return_statement_context'
 require 'brazil/filter_statement_context'
+require 'brazil/sort_statement_context'
 
 class Query
   include AQL
@@ -32,6 +33,13 @@ class Query
     context = FilterStatementContext.new
     context.instance_eval(&b)
     @content << Node::Operation::Unary::Filter.new(context.to_ast)
+    self
+  end
+
+  def sort(&b)
+    context = SortStatementContext.new
+    context.instance_eval(&b)
+    @content << Node::Operation::Nary::Sort.new(context.to_ast)
     self
   end
 

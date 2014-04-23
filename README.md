@@ -89,6 +89,16 @@ query = Query.for_all('character', in_collection: 'characters')
   .return_as('character')
 ```
 
+## Sorting
+
+If you want to sort the result via certain criteria, use the `sort` function in Brazil. Sort takes a block where you can give an attribute name of a variable to sort. If for example you want to sort all characters using their name in ascending order, you could do it as follows:
+
+```ruby
+query = Query.for_all('character', in_collection: 'characters')
+  .sort { character['name'] }
+  .return_as('character')
+```
+
 ## Contributing
 
 If you want to contribute to the project, see CONTRIBUTING.md for details. It contains information on our process and how to set up everything. The following people have contributed to this project:

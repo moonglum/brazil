@@ -71,4 +71,14 @@ describe 'Usage Examples' do
       expect(result.first['name']).to eq 'Sam Lawry'
     end
   end
+
+  describe 'sort' do
+    it 'should allow to sort all characters by name' do
+      query = Query.for_all('character', in_collection: 'characters')
+        .sort { character['name'] }
+        .return_as('character')
+      result = send_query(query)
+      expect(result.first['name']).to eq 'Archibald "Harry" Tuttle'
+    end
+  end
 end
