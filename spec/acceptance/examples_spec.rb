@@ -108,5 +108,15 @@ describe 'Usage Examples' do
       result = send_query(query)
       expect(result.length).to be 2
     end
+
+    it 'should allow to limit with an offset' do
+      query = Query.for_all('character', in_collection: 'characters')
+        .sort_by { character['name'] }
+        .limit(2, offset_by: 1)
+        .return_as('character')
+      result = send_query(query)
+      expect(result.length).to be 2
+      expect(result.first['name']).to eq 'Ida Lowry'
+    end
   end
 end

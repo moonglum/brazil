@@ -125,6 +125,15 @@ query = Query.for_all('character', in_collection: 'characters')
   .return_as('character')
 ```
 
+You can also provide an offset to the limit function:
+
+```ruby
+query = Query.for_all('character', in_collection: 'characters')
+  .sort_by { character['name'] }
+  .limit(2, offset_by: 1)
+  .return_as('character')
+```
+
 ## Contributing
 
 If you want to contribute to the project, see CONTRIBUTING.md for details. It contains information on our process and how to set up everything. The following people have contributed to this project:

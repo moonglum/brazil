@@ -43,8 +43,8 @@ class Query
     self
   end
 
-  def limit(limit)
-    @content << Node::Operation::Limit.new(Node::Literal.build(limit), nil)
+  def limit(limit, offset_by: 0)
+    @content << Node::Operation::Limit.new(Node::Literal.build(limit), Node::Literal.build(offset_by))
     self
   end
 
