@@ -99,6 +99,14 @@ query = Query.for_all('character', in_collection: 'characters')
   .return_as('character')
 ```
 
+If instead you want to sort in descending order, you could do that as follows:
+
+```ruby
+query = Query.for_all('character', in_collection: 'characters')
+  .sort { descending(character['name']) }
+  .return_as('character')
+```
+
 ## Contributing
 
 If you want to contribute to the project, see CONTRIBUTING.md for details. It contains information on our process and how to set up everything. The following people have contributed to this project:

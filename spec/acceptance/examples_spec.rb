@@ -80,5 +80,13 @@ describe 'Usage Examples' do
       result = send_query(query)
       expect(result.first['name']).to eq 'Archibald "Harry" Tuttle'
     end
+
+    it 'should allow to sort all characters by name in descending order' do
+      query = Query.for_all('character', in_collection: 'characters')
+        .sort { descending(character['name']) }
+        .return_as('character')
+      result = send_query(query)
+      expect(result.first['name']).to eq 'Spoor'
+    end
   end
 end
