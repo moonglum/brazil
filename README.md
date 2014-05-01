@@ -18,6 +18,14 @@
 
 Brazil is an experimental Ruby DSL for creating queries for the [ArangoDB](https://www.arangodb.org) in the the [Arango Query Language](https://www.arangodb.org/manuals/2/Aql.html). Brazil is also the fifth biggest producer of Avocados (according to Wikipedia) and an amazing movie. As chance would have it, the spike of this gem was done on my way to Brazil. Brazil is not intended to be a Object Document Mapper, but to be used by the ODM to build the queries. The DSL is inspired by both the Sequel and the ActiveRecord gems.
 
+If you want to try it out this gem has an executable called `brazil` which will connect to your local ArangoDB running on the standard port. You can try out all examples below – it will store the example data in the database if you want. To run it you need to install both `ashikawa-core` and `pry`:
+
+```ruby
+gem install ashikawa-core
+gem install pry
+brazil
+```
+
 ## ArangoDB
 
 [ArangoDB](http://www.arangodb.org) is...

@@ -1,0 +1,65 @@
+#!/usr/bin/env ruby
+
+require 'brazil'
+
+def try_to_require_gem(name)
+  require name
+rescue LoadError
+  puts "To use Brazil in the interactive mode, you need #{name} installed"
+  exit(1)
+end
+
+try_to_require_gem('pry')
+try_to_require_gem('ashikawa-core')
+
+DATABASE = Ashikawa::Core::Database.new do |config|
+  config.url = "http://localhost:8529"
+end
+
+begin
+  DATABASE.collections
+rescue Faraday::Error::ConnectionFailed
+  puts 'Could not find an ArangoDB instance running locally on port 8529'
+  exit(1)
+end
+
+print 'I found your local ArangoDB! Should I add the two collections with sample data from the README? [Yn] '
+
+if gets == "Y\n"
+  character = DATABASE.create_collection('characters')
+  character.create_document(name: 'Sam Lawry', job: 'Goverment Employee')
+  character.create_document(name: 'Archibald "Harry" Tuttle', job: 'Renegade Air Conditioning Specialist')
+  character.create_document(name: 'Jill Layton')
+  character.create_document(name: 'Jack Lint', job: 'Goverment Employee')
+  character.create_document(name: 'Ida Lowry', job: 'Retired')
+  character.create_document(name: 'Spoor', job: 'Goverment Certified Air Conditioning Specialist')
+  character.create_document(name: 'Mr. Kurtzmann')
+  casting = DATABASE.create_collection('casting')
+  casting.create_document(actor: 'Jonathan Pryce', character: 'Sam Lawry')
+  casting.create_document(actor: 'Robert De Niro', character: 'Archibald "Harry" Tuttle')
+  casting.create_document(actor: 'Kim Greist', character: 'Jill Layton')
+  casting.create_document(actor: 'Michael Palin', character: 'Jack Lint')
+  casting.create_document(actor: 'Katherine Helmond', character: 'Ida Lowry')
+  casting.create_document(actor: 'Bob Hoskins', character: 'Spoor')
+  casting.create_document(actor: 'Ian Holm', character: 'Mr. Kurtzmann')
+  puts 'Ok. Done.'
+else
+  puts 'Collections not added'
+end
+
+puts [
+  '',
+  'If you want to send a query you have built with Brazil, you can send it via `send_query(query_string)`',
+  'For example:',
+  "query = Query.for_all('character', in_collection: 'characters').return_as('character')",
+  'send_query(query)',
+  'Have fun! If you have any feedback, send it to lucas@arangodb.org',
+  ''
+]
+
+def send_query(query)
+  DATABASE.query.execute(query.to_aql).to_a.map(&:to_h)
+end
+
+ARGV.clear
+Pry.start
