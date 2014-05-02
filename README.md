@@ -14,7 +14,7 @@
 > 'Ere I am, J.H. ...The ghost in the machine.   
   &mdash; Mr. Helpmann
 
-**This is a spike to see how the DSL should look like.**
+**This is a spike to see how the DSL should look like. There's no gem on Rubygems yet, you have to install it from this repository. There are still some important parts of AQL missing, I will add them over the next days to this spike. The code is messy as this is only a spike :wink: I would love your feedback on the API!**
 
 Brazil is an experimental Ruby DSL for creating queries for the [ArangoDB](https://www.arangodb.org) in the the [Arango Query Language](https://www.arangodb.org/manuals/2/Aql.html). Brazil is also the fifth biggest producer of Avocados (according to Wikipedia) and an amazing movie. As chance would have it, the spike of this gem was done on my way to Brazil. Brazil is not intended to be a Object Document Mapper, but to be used by the ODM to build the queries. The DSL is inspired by both the Sequel and the ActiveRecord gems.
 
