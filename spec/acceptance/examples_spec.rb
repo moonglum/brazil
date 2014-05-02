@@ -119,4 +119,18 @@ describe 'Usage Examples' do
       expect(result.first['name']).to eq 'Ida Lowry'
     end
   end
+
+  describe 'and_for_all' do
+    it 'should allow a join on the character name' do
+      query = Query.for_all('character', in_collection: 'characters')
+        .and_for_all('cast', in_collection: 'casting')
+        .filter_by { character['name'] == casting['character'] }
+        .return_as do |result|
+          result['actor'] = cast['actor']
+          result['character_job'] = character['job']
+        end
+      result = send_query(query)
+      p result
+    end
+  end
 end

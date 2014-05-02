@@ -17,6 +17,11 @@ class Query
     @content = []
   end
 
+  def and_for_all(variable_name, in_collection:)
+    @content << Node::Operation::For.new(Node::Name.new(variable_name), Node::Name.new(in_collection), Node::Block.new([]))
+    self
+  end
+
   def return_as(variable_name = nil, &b)
     if block_given? and variable_name == nil
       document = Document.new
