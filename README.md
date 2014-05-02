@@ -34,22 +34,11 @@ brazil
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Check out the repository from Github. `cd` into the folder and run:
 
-```ruby
-gem 'brazil'
 ```
-
-And then execute:
-
-```shell
 bundle
-```
-
-Or install it yourself as:
-
-```shell
-gem install brazil
+bundle exec rake install
 ```
 
 ## Usage
