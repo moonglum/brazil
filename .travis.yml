@@ -1,0 +1,8 @@
+language: ruby
+before_script:
+  - ./spec/setup/arangodb.sh
+rvm:
+  - 2.0.0
+env:
+  - ARANGODB_DISABLE_AUTHENTIFICATION=true VERSION=2.0
+script: "bundle exec rake"
