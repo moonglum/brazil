@@ -11,7 +11,7 @@
 
 ![Cover Image](http://neverbesocial.com/wp-content/uploads/2011/09/brazil-dvd1.jpg)
 
-> 'Ere I am, J.H. ...The ghost in the machine.   
+> 'Ere I am, J.H. ...The ghost in the machine.
   &mdash; Mr. Helpmann
 
 **This is a spike to see how the DSL should look like. There's no gem on Rubygems yet, you have to install it from this repository. There are still some important parts of AQL missing, I will add them over the next days to this spike. The code is messy as this is only a spike :wink: I would love your feedback on the API!**
@@ -133,4 +133,6 @@ query = Query.for_all('character', in_collection: 'characters')
 
 ## Contributing
 
-If you want to contribute to the project, see CONTRIBUTING.md for details. It contains information on our process and how to set up everything. The following people have contributed to this project:
+If you want to contribute to the project, see [CONTRIBUTING.md][contributing] for details. It contains information on our process and how to set up everything. The following people have contributed to this project:
+
+[contributing]: https://github.com/moonglum/brazil/blob/master/CONTRIBUTING.md
