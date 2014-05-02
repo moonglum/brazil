@@ -2,11 +2,11 @@
 
 | Project         | Brazil
 |:----------------|:--------------------------------------------------
-| Homepage        | ...
-| Documentation   | [RubyDoc](http://www.rubydoc.info/gems/brazil)
+| Homepage        | https://github.com/moonglum/brazil
+| Documentation   | [RubyDoc](rubydoc.info/github/moonglum/brazil/master/frames)
 | CI              | [![Build Status](http://img.shields.io/travis/moonglum/brazil.svg)](http://travis-ci.org/moonglum/brazil)
 | Code Metrics    | [![Code Climate](http://img.shields.io/codeclimate/github/moonglum/brazil.svg)](https://codeclimate.com/github/moonglum/brazil) [![Code Climate Coverage](http://img.shields.io/codeclimate/coverage/github/moonglum/brazil.svg)](https://codeclimate.com/github/moonglum/brazil)
-| Gem Version     | [![Gem Version](http://img.shields.io/gem/v/brazil.svg)](http://rubygems.org/gems/brazil)
+| Gem Version     | *Not available as a gem yet*
 | Dependencies    | [![Dependency Status](http://img.shields.io/gemnasium/moonglum/brazil.svg)](https://gemnasium.com/moonglum/brazil)
 
 ![Cover Image](http://neverbesocial.com/wp-content/uploads/2011/09/brazil-dvd1.jpg)
