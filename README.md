@@ -20,7 +20,7 @@ Brazil is an experimental Ruby DSL for creating queries for the [ArangoDB](https
 
 If you want to try it out this gem has an executable called `brazil` which will connect to your local ArangoDB running on the standard port. You can try out all examples below – it will store the example data in the database if you want. To run it you need to install both `ashikawa-core` and `pry`:
 
-```ruby
+```
 gem install ashikawa-core
 gem install pry
 brazil
